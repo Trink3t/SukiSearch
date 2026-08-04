@@ -13,38 +13,129 @@
 
 namespace App\Models{
 /**
+ * @property int $id
+ * @property int $user_id
+ * @property int $product_id
+ * @property int $quantity
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Product|null $product
  * @property-read \App\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CartItem newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CartItem newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CartItem query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CartItem whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CartItem whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CartItem whereProductId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CartItem whereQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CartItem whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CartItem whereUserId($value)
  */
 	class CartItem extends \Eloquent {}
 }
 
 namespace App\Models{
 /**
+ * @property int $id
+ * @property string $name
+ * @property string|null $description
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Product> $products
  * @property-read int|null $products_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereUpdatedAt($value)
  */
 	class Category extends \Eloquent {}
 }
 
 namespace App\Models{
 /**
- * @property-read \App\Models\Category|null $category
+ * @property int $id
+ * @property int $store_id
+ * @property int $category_id
+ * @property string $name
+ * @property string|null $description
+ * @property string|null $image_path
+ * @property numeric $price
+ * @property int|null $quantity
+ * @property bool $is_active
+ * @property \Illuminate\Support\Carbon $last_updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\CartItem> $cartItems
+ * @property-read int|null $cart_items_count
+ * @property-read \App\Models\Category $category
  * @property-read \App\Models\Store|null $store
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereCategoryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereImagePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereIsActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereLastUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereStoreId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product withoutTrashed()
  */
 	class Product extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * @property int $id
+ * @property string $public_id
+ * @property int $customer_id
+ * @property int $store_id
+ * @property string $status
+ * @property string|null $expires_at
+ * @property string|null $pickup_code_hash
+ * @property string|null $qr_token_hash
+ * @property string|null $ready_at
+ * @property string|null $picked_up_at
+ * @property string|null $completed_at
+ * @property string|null $cancelled_by
+ * @property string|null $cancelled_reason
+ * @property string|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation whereCancelledBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation whereCancelledReason($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation whereCompletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation whereCustomerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation whereExpiresAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation wherePickedUpAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation wherePickupCodeHash($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation wherePublicId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation whereQrTokenHash($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation whereReadyAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation whereStoreId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation whereUpdatedAt($value)
+ */
+	class Reservation extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -130,6 +221,8 @@ namespace App\Models{
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\CartItem> $cartItems
+ * @property-read int|null $cart_items_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Store> $stores

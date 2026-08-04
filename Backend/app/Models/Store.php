@@ -47,4 +47,9 @@ class Store extends Model
     {
         return $this->hasMany(Product::class, 'store_id');
     }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'store_id');
+    }
 }
