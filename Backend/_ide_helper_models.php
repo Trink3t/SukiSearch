@@ -13,6 +13,19 @@
 
 namespace App\Models{
 /**
+ * @property-read \App\Models\Product|null $product
+ * @property-read \App\Models\User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CartItem newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CartItem newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CartItem query()
+ */
+	class CartItem extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Product> $products
+ * @property-read int|null $products_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category query()
@@ -22,9 +35,14 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * @property-read \App\Models\Category|null $category
+ * @property-read \App\Models\Store|null $store
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product withoutTrashed()
  */
 	class Product extends \Eloquent {}
 }
@@ -68,6 +86,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User|null $owner
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Product> $products
+ * @property-read int|null $products_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Store newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Store newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Store onlyTrashed()
