@@ -5,7 +5,9 @@ namespace App\Models;
 use App\Enums\StoreStatus;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[Fillable([
     'owner_id',
@@ -24,6 +26,8 @@ use Illuminate\Database\Eloquent\Model;
 #[Table('stores')]
 class Store extends Model
 {
+    use HasFactory, SoftDeletes;
+
     protected function casts(): array
     {
         return [
@@ -37,5 +41,10 @@ class Store extends Model
     public function owner()
     {
         return $this->belongsTo(User::class, 'owner_id');
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'store_id');
     }
 }

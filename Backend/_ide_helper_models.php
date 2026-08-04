@@ -13,6 +13,24 @@
 
 namespace App\Models{
 /**
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category query()
+ */
+	class Category extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product query()
+ */
+	class Product extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * @property int $id
  * @property \App\Enums\UserRole $name
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -44,13 +62,15 @@ namespace App\Models{
  * @property string $province
  * @property numeric $latitude
  * @property numeric $longitude
- * @property string $status
+ * @property \App\Enums\StoreStatus $status
  * @property bool $is_open
- * @property string|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User|null $owner
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Store newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Store newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Store onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Store query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Store whereBarangay($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Store whereBarangayExternalId($value)
@@ -68,6 +88,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Store whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Store whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Store whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Store withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Store withoutTrashed()
  */
 	class Store extends \Eloquent {}
 }
@@ -90,6 +112,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Store> $stores
+ * @property-read int|null $stores_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
