@@ -13,12 +13,63 @@
 
 namespace App\Models{
 /**
+ * @property int $id
  * @property \App\Enums\UserRole $name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\UserRole|null $pivot
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
+ * @property-read int|null $users_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Role newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Role newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Role query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Role whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Role whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Role whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Role whereUpdatedAt($value)
  */
 	class Role extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * @property int $id
+ * @property int $user_id
+ * @property string $name
+ * @property string|null $description
+ * @property string|null $image_path
+ * @property string $barangay_external_id
+ * @property string $barangay
+ * @property string $city_municipality
+ * @property string $province
+ * @property numeric $latitude
+ * @property numeric $longitude
+ * @property string $status
+ * @property bool $is_open
+ * @property string|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Store newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Store newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Store query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Store whereBarangay($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Store whereBarangayExternalId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Store whereCityMunicipality($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Store whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Store whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Store whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Store whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Store whereImagePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Store whereIsOpen($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Store whereLatitude($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Store whereLongitude($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Store whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Store whereProvince($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Store whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Store whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Store whereUserId($value)
+ */
+	class Store extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -68,9 +119,19 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * @property int $id
+ * @property int $user_id
+ * @property int $role_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserRole newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserRole newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserRole query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserRole whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserRole whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserRole whereRoleId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserRole whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserRole whereUserId($value)
  */
 	class UserRole extends \Eloquent {}
 }
