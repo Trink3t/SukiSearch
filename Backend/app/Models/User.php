@@ -4,10 +4,12 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Enums\UserRole as Role;
 use App\Enums\UserStatus;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
+use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -27,6 +29,8 @@ use Laravel\Sanctum\HasApiTokens;
 ])]
 
 #[Hidden(['password', 'remember_token'])]
+
+#[Table('users')]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
@@ -45,5 +49,17 @@ class User extends Authenticatable
             'status' => UserStatus::class,
             'password' => 'hashed',
         ];
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id')
+            ->using(UserRole::class)
+            ->withTimestamps();
+    }
+
+    public function hasRole(Role $role): bool
+    {
+        return $this->roles()->where('name', $role->value)->exists();
     }
 }
