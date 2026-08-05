@@ -21,6 +21,10 @@ return new class extends Migration
             $table->jsonb('data')->nullable();
             $table->timestamp('read_at')->nullable();
             $table->timestamps();
+
+            $table->index('user_id');
+            $table->index('read_at');
+            $table->index('created_at');
         });
     }
 

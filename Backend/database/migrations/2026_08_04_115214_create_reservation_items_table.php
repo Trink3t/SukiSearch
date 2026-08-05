@@ -26,6 +26,10 @@ return new class extends Migration
             $table->text('rejection_reason')->nullable();
             $table->text('cancellation_reason')->nullable();
             $table->timestamps();
+
+            $table->index('reservation_id');
+            $table->index('product_id');
+            $table->index('status');
         });
     }
 

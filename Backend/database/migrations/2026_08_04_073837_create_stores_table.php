@@ -29,6 +29,14 @@ return new class extends Migration
             $table->boolean('is_open')->default(true);
             $table->softDeletes();
             $table->timestamps();
+
+            $table->index('user_id');
+            $table->index('status');
+            $table->index('is_open');
+            $table->index('barangay_external_id');
+            $table->index('longitude');
+            $table->index(['latitude', 'longitude']);
+            $table->index('name');
         });
     }
 

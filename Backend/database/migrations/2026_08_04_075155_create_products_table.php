@@ -26,6 +26,13 @@ return new class extends Migration
             $table->timestamp('last_updated_at');
             $table->softDeletes();
             $table->timestamps();
+
+            $table->index('store_id');
+            $table->index('category_id');
+            $table->index('name');
+            $table->index('is_active');
+            $table->index('quantity');
+            $table->index('last_updated_at');
         });
     }
 

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\CancelledBy;
+use App\Enums\ReservationStatus;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,6 +33,8 @@ class Reservation extends Model
     protected function casts(): array
     {
         return [
+            'status' => ReservationStatus::class,
+            'cancelled_by' => CancelledBy::class,
             'expires_at' => 'datetime',
             'ready_at' => 'datetime',
             'picked_up_at' => 'datetime',

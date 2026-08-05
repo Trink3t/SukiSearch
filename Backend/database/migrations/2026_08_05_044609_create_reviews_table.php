@@ -24,6 +24,11 @@ return new class extends Migration
             $table->timestamp('published_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
+
+            $table->index('customer_id');
+            $table->index('store_id');
+            $table->index('rating');
+            $table->index('published_at');
         });
     }
 

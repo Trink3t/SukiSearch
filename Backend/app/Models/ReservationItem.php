@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ReservationItemStatus;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,6 +28,7 @@ class ReservationItem extends Model
     protected function casts(): array
     {
         return [
+            'status' => ReservationItemStatus::class,
             'unit_price' => 'decimal',
             'requested_quantity' => 'integer',
             'accepted_quantity' => 'integer',

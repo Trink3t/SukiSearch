@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 #[Fillable([
@@ -12,4 +13,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 ])]
 
 #[Table('user_role')]
-class UserRole extends Pivot {}
+class UserRole extends Pivot
+{
+    use HasFactory;
+}

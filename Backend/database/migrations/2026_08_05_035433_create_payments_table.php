@@ -22,6 +22,11 @@ return new class extends Migration
             $table->timestamp('paid_at')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
+
+            $table->index('reservation_id');
+            $table->index('recorded_by');
+            $table->index('method');
+            $table->index('paid_at');
         });
     }
 

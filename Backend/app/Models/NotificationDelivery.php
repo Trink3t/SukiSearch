@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\NotificationDeliveryChannel;
 use App\Enums\NotificationDeliveryStatus;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,6 +23,7 @@ class NotificationDelivery extends Model
     protected function casts(): array
     {
         return [
+            'channel' => NotificationDeliveryChannel::class,
             'sent_at' => 'datetime',
             'failed_at' => 'datetime',
             'status' => NotificationDeliveryStatus::class,

@@ -4,13 +4,14 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use App\Enums\UserRole as Role;
+use App\Enums\UserRole as UserRoleEnum;
 use App\Enums\UserStatus;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -51,21 +52,21 @@ class User extends Authenticatable
         ];
     }
 
-    public function roles()
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id')
             ->using(UserRole::class)
             ->withTimestamps();
     }
 
-    public function hasRole(Role $role): bool
+    public function hasRole(UserRoleEnum $role): bool
     {
         return $this->roles()->where('name', $role->value)->exists();
     }
 
     public function stores()
     {
-        return $this->hasMany(Store::class, 'owner_id');
+        return $this->hasMany(Store::class, 'user_id');
     }
 
     public function cartItems()

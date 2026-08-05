@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Enums\FailureReason;
+use App\Enums\PickupVerificationMethod;
+use App\Enums\PickupVerificationStatus;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,6 +28,9 @@ class PickupVerificationAttempt extends Model
     protected function casts(): array
     {
         return [
+            'method' => PickupVerificationMethod::class,
+            'status' => PickupVerificationStatus::class,
+            'failure_reason' => FailureReason::class,
             'attempted_at' => 'timestamp',
         ];
     }

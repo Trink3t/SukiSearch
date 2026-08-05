@@ -30,6 +30,12 @@ return new class extends Migration
             $table->text('cancelled_reason')->nullable();
             $table->softDeletes();
             $table->timestamps();
+
+            $table->index('customer_id');
+            $table->index('store_id');
+            $table->index('status');
+            $table->index('expires_at');
+            $table->index('created_at');
         });
     }
 

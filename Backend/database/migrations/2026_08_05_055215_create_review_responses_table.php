@@ -19,6 +19,9 @@ return new class extends Migration
             $table->foreignIdFor(User::class, 'store_owner_id')->constrained()->restrictOnDelete();
             $table->text('response');
             $table->timestamps();
+
+            $table->index('review_id');
+            $table->index('store_owner_id');
         });
     }
 

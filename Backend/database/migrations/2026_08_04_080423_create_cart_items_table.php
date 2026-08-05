@@ -19,6 +19,10 @@ return new class extends Migration
             $table->foreignIdFor(Product::class)->constrained()->restrictOnDelete();
             $table->integer('quantity')->default(1);
             $table->timestamps();
+
+            $table->index('user_id');
+            $table->index('product_id');
+            $table->unique(['user_id', 'product_id']);
         });
     }
 

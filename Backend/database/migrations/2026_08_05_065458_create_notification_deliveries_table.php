@@ -21,6 +21,11 @@ return new class extends Migration
             $table->timestamp('failed_at')->nullable();
             $table->text('error_message')->nullable();
             $table->timestamps();
+
+            $table->index('notification_id');
+            $table->index('channel');
+            $table->index('status');
+            $table->index('sent_at');
         });
     }
 

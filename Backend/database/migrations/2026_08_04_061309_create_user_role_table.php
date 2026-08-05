@@ -18,6 +18,10 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained()->restrictOnDelete();
             $table->foreignIdFor(Role::class)->constrained()->restrictOnDelete();
             $table->timestamps();
+
+            $table->index('user_id');
+            $table->index('role_id');
+            $table->unique(['user_id', 'role_id']);
         });
     }
 

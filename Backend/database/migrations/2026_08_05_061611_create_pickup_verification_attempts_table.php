@@ -24,6 +24,11 @@ return new class extends Migration
             $table->ipAddress()->nullable();
             $table->string('user_agent')->nullable();
             $table->timestamps();
+
+            $table->index('reservation_id');
+            $table->index('verified_by');
+            $table->index('status');
+            $table->index('attempted_at');
         });
     }
 
