@@ -87,4 +87,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Review::class, 'customer_id');
     }
+
+    public function responses()
+    {
+        return $this->hasMany(ReviewResponses::class, 'store_owner_id');
+    }
+
+    public function verifier()
+    {
+        return $this->belongsTo(User::class, 'verified_by');
+    }
 }

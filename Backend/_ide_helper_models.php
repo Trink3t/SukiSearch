@@ -86,6 +86,17 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * @property-read \App\Models\Reservation|null $reservation
+ * @property-read \App\Models\User|null $verifiedBy
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PickupVerificationAttempt newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PickupVerificationAttempt newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PickupVerificationAttempt query()
+ */
+	class PickupVerificationAttempt extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * @property int $id
  * @property int $store_id
  * @property int $category_id
@@ -227,6 +238,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User|null $customer
  * @property-read \App\Models\Reservation|null $reservation
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ReviewResponses> $responses
+ * @property-read int|null $responses_count
  * @property-read \App\Models\Store|null $store
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Review newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Review newQuery()
@@ -364,6 +377,8 @@ namespace App\Models{
  * @property-read int|null $recorded_payments_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Reservation> $reservations
  * @property-read int|null $reservations_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Review> $reviews
+ * @property-read int|null $reviews_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Store> $stores
  * @property-read int|null $stores_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens

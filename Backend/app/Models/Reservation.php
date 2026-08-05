@@ -57,4 +57,14 @@ class Reservation extends Model
     {
         return $this->hasMany(Payment::class, 'reservation_id');
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'reservation_id');
+    }
+
+    public function verificationAttempts()
+    {
+        return $this->hasMany(PickupVerificationAttempt::class, 'reservation_id');
+    }
 }
