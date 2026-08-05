@@ -77,4 +77,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Reservation::class, 'customer_id');
     }
+
+    public function recordedPayments()
+    {
+        return $this->hasMany(Payment::class, 'recorded_by');
+    }
 }

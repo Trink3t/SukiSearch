@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\PaymentMethod;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,27 +10,23 @@ use Illuminate\Database\Eloquent\Model;
 
 #[Fillable([
     'reservation_id',
-    'product_id',
-    'product_name',
-    'unit_price',
-    'requested_quantity',
-    'accepted_quantity',
-    'status',
-    'rejection_reason',
-    'cancellation_reason',
+    'method',
+    'amount',
+    'recorded_by',
+    'paid_at',
+    'notes',
 ])]
-
-#[Table('reservation_items')]
-class ReservationItem extends Model
+#[Table('payments')]
+class Payment extends Model
 {
     use HasFactory;
 
     protected function casts(): array
     {
         return [
-            'unit_price' => 'decimal',
-            'requested_quantity' => 'integer',
-            'accepted_quantity' => 'integer',
+            'amount' => 'decimal',
+            'paid_at' => 'datetime',
+            'method' => PaymentMethod::class,
         ];
     }
 
@@ -38,8 +35,8 @@ class ReservationItem extends Model
         return $this->belongsTo(Reservation::class, 'reservation_id');
     }
 
-    public function product()
+    public function recordedBy()
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsTo(User::class, 'recorded_by');
     }
 }
