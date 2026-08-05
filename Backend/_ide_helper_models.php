@@ -67,7 +67,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User|null $recordedBy
- * @property-read \App\Models\Reservation $reservation
+ * @property-read \App\Models\Reservation|null $reservation
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment query()
@@ -143,7 +143,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $completed_at
  * @property string|null $cancelled_by
  * @property string|null $cancelled_reason
- * @property string|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User|null $customer
@@ -154,6 +154,7 @@ namespace App\Models{
  * @property-read \App\Models\Store|null $store
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation whereCancelledBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation whereCancelledReason($value)
@@ -171,6 +172,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation whereStoreId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation withoutTrashed()
  */
 	class Reservation extends \Eloquent {}
 }
@@ -190,7 +193,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Product|null $product
- * @property-read \App\Models\Reservation $reservation
+ * @property-read \App\Models\Reservation|null $reservation
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReservationItem newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReservationItem newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReservationItem query()
@@ -212,11 +215,60 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * @property int $id
+ * @property int $reservation_id
+ * @property int $customer_id
+ * @property int $store_id
+ * @property int $rating
+ * @property string|null $comment
+ * @property \Illuminate\Support\Carbon|null $published_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User|null $customer
+ * @property-read \App\Models\Reservation|null $reservation
+ * @property-read \App\Models\Store|null $store
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Review newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Review newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Review onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Review query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Review whereComment($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Review whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Review whereCustomerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Review whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Review whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Review wherePublishedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Review whereRating($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Review whereReservationId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Review whereStoreId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Review whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Review withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Review withoutTrashed()
  */
 	class Review extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * @property int $id
+ * @property int $review_id
+ * @property int $store_owner_id
+ * @property string $response
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Review|null $review
+ * @property-read \App\Models\User|null $storeOwner
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReviewResponses newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReviewResponses newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReviewResponses query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReviewResponses whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReviewResponses whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReviewResponses whereResponse($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReviewResponses whereReviewId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReviewResponses whereStoreOwnerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReviewResponses whereUpdatedAt($value)
+ */
+	class ReviewResponses extends \Eloquent {}
 }
 
 namespace App\Models{
