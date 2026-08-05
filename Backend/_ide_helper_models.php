@@ -57,6 +57,15 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Notification newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Notification newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Notification query()
+ */
+	class Notification extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * @property int $id
  * @property int $reservation_id
  * @property \App\Enums\PaymentMethod $method
@@ -86,11 +95,33 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * @property int $id
+ * @property int $reservation_id
+ * @property int $verified_by
+ * @property string $method
+ * @property string $status
+ * @property string|null $failure_reason
+ * @property int $attempted_at
+ * @property string|null $ip_address
+ * @property string|null $user_agent
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Reservation|null $reservation
  * @property-read \App\Models\User|null $verifiedBy
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PickupVerificationAttempt newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PickupVerificationAttempt newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PickupVerificationAttempt query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PickupVerificationAttempt whereAttemptedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PickupVerificationAttempt whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PickupVerificationAttempt whereFailureReason($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PickupVerificationAttempt whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PickupVerificationAttempt whereIpAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PickupVerificationAttempt whereMethod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PickupVerificationAttempt whereReservationId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PickupVerificationAttempt whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PickupVerificationAttempt whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PickupVerificationAttempt whereUserAgent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PickupVerificationAttempt whereVerifiedBy($value)
  */
 	class PickupVerificationAttempt extends \Eloquent {}
 }
@@ -162,7 +193,11 @@ namespace App\Models{
  * @property-read int|null $items_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Payment> $payments
  * @property-read int|null $payments_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Review> $reviews
+ * @property-read int|null $reviews_count
  * @property-read \App\Models\Store|null $store
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PickupVerificationAttempt> $verificationAttempts
+ * @property-read int|null $verification_attempts_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation onlyTrashed()
@@ -377,12 +412,15 @@ namespace App\Models{
  * @property-read int|null $recorded_payments_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Reservation> $reservations
  * @property-read int|null $reservations_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ReviewResponses> $responses
+ * @property-read int|null $responses_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Review> $reviews
  * @property-read int|null $reviews_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Store> $stores
  * @property-read int|null $stores_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
+ * @property-read User|null $verifier
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()

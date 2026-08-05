@@ -97,4 +97,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(User::class, 'verified_by');
     }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'user_id');
+    }
 }
