@@ -57,11 +57,58 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * @property int $id
+ * @property int $user_id
+ * @property string $type
+ * @property string $title
+ * @property string $body
+ * @property string|null $data
+ * @property \Illuminate\Support\Carbon|null $read_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Notification newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Notification newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Notification query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Notification whereBody($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Notification whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Notification whereData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Notification whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Notification whereReadAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Notification whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Notification whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Notification whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Notification whereUserId($value)
  */
 	class Notification extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * @property int $id
+ * @property int $notification_id
+ * @property string $channel
+ * @property string $status
+ * @property \Illuminate\Support\Carbon|null $sent_at
+ * @property \Illuminate\Support\Carbon|null $failed_at
+ * @property string|null $error_message
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Notification $notification
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|NotificationDelivery newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|NotificationDelivery newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|NotificationDelivery query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|NotificationDelivery whereChannel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|NotificationDelivery whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|NotificationDelivery whereErrorMessage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|NotificationDelivery whereFailedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|NotificationDelivery whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|NotificationDelivery whereNotificationId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|NotificationDelivery whereSentAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|NotificationDelivery whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|NotificationDelivery whereUpdatedAt($value)
+ */
+	class NotificationDelivery extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -406,7 +453,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\CartItem> $cartItems
  * @property-read int|null $cart_items_count
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Notification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Payment> $recordedPayments
  * @property-read int|null $recorded_payments_count
