@@ -46,4 +46,9 @@ class Reservation extends Model
     {
         return $this->belongsTo(Store::class, 'store_id');
     }
+
+    public function items()
+    {
+        return $this->hasMany(ReservationItem::class, 'reservation_id');
+    }
 }

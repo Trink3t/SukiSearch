@@ -48,4 +48,9 @@ class Product extends Model
     {
         return $this->hasMany(CartItem::class, 'product_id');
     }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'product_id');
+    }
 }

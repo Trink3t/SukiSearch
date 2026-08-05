@@ -104,17 +104,19 @@ namespace App\Models{
  * @property int $customer_id
  * @property int $store_id
  * @property string $status
- * @property string|null $expires_at
+ * @property \Illuminate\Support\Carbon|null $expires_at
  * @property string|null $pickup_code_hash
  * @property string|null $qr_token_hash
- * @property string|null $ready_at
- * @property string|null $picked_up_at
- * @property string|null $completed_at
+ * @property \Illuminate\Support\Carbon|null $ready_at
+ * @property \Illuminate\Support\Carbon|null $picked_up_at
+ * @property \Illuminate\Support\Carbon|null $completed_at
  * @property string|null $cancelled_by
  * @property string|null $cancelled_reason
  * @property string|null $deleted_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User|null $customer
+ * @property-read \App\Models\Store|null $store
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation query()
@@ -136,6 +138,41 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation whereUpdatedAt($value)
  */
 	class Reservation extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * @property int $id
+ * @property int $reservation_id
+ * @property int $product_id
+ * @property string $product_name
+ * @property numeric $unit_price
+ * @property int $requested_quantity
+ * @property int $accepted_quantity
+ * @property string $status
+ * @property string|null $rejection_reason
+ * @property string|null $cancellation_reason
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Product|null $product
+ * @property-read \App\Models\Reservation $reservation
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReservationItem newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReservationItem newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReservationItem query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReservationItem whereAcceptedQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReservationItem whereCancellationReason($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReservationItem whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReservationItem whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReservationItem whereProductId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReservationItem whereProductName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReservationItem whereRejectionReason($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReservationItem whereRequestedQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReservationItem whereReservationId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReservationItem whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReservationItem whereUnitPrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ReservationItem whereUpdatedAt($value)
+ */
+	class ReservationItem extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -179,6 +216,8 @@ namespace App\Models{
  * @property-read \App\Models\User|null $owner
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Product> $products
  * @property-read int|null $products_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Reservation> $reservations
+ * @property-read int|null $reservations_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Store newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Store newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Store onlyTrashed()
@@ -225,6 +264,8 @@ namespace App\Models{
  * @property-read int|null $cart_items_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Reservation> $reservations
+ * @property-read int|null $reservations_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Store> $stores
  * @property-read int|null $stores_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
