@@ -57,9 +57,29 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * @property int $id
+ * @property int $reservation_id
+ * @property \App\Enums\PaymentMethod $method
+ * @property numeric $amount
+ * @property int $recorded_by
+ * @property \Illuminate\Support\Carbon|null $paid_at
+ * @property string|null $notes
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User|null $recordedBy
+ * @property-read \App\Models\Reservation $reservation
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment whereMethod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment whereNotes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment wherePaidAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment whereRecordedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment whereReservationId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment whereUpdatedAt($value)
  */
 	class Payment extends \Eloquent {}
 }
@@ -129,6 +149,8 @@ namespace App\Models{
  * @property-read \App\Models\User|null $customer
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ReservationItem> $items
  * @property-read int|null $items_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Payment> $payments
+ * @property-read int|null $payments_count
  * @property-read \App\Models\Store|null $store
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation newQuery()
@@ -186,6 +208,15 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReservationItem whereUpdatedAt($value)
  */
 	class ReservationItem extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Review newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Review newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Review query()
+ */
+	class Review extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -277,6 +308,8 @@ namespace App\Models{
  * @property-read int|null $cart_items_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Payment> $recordedPayments
+ * @property-read int|null $recorded_payments_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Reservation> $reservations
  * @property-read int|null $reservations_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Store> $stores
