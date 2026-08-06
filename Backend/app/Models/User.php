@@ -10,6 +10,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Attributes\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -50,6 +51,19 @@ class User extends Authenticatable
             'status' => UserStatus::class,
             'password' => 'hashed',
         ];
+    }
+
+    public function scopeSearch(
+        Builder $query,
+        string $value
+    ): Builder {
+        return $query->where(function (Builder $query) use ($value) {
+            $query
+                ->where('first_name', 'ILIKE', "%{$value}%")
+                ->orWhere('middle_name', 'ILIKE', "%{$value}%")
+                ->orWhere('last_name', 'ILIKE', "%{$value}%")
+                ->orWhere('email', 'ILIKE', "%{$value}%");
+        });
     }
 
     public function roles(): BelongsToMany
