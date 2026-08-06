@@ -2,19 +2,42 @@
 
 namespace App\Services;
 
+use App\DTOs\Auth\LoginDTO;
+use App\Models\User;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Support\Facades\Auth;
+
 class AuthService
 {
-    /**
-     * Create a new class instance.
-     */
-    public function __construct()
+    public function login(LoginDTO $dto): User
     {
-        //
+        $successLogin = Auth::attempt($dto->toArray());
+        if (! $successLogin) {
+            throw new AuthenticationException('Invalid credentials.');
+        }
+
+        $user = Auth::user();
+
+        return $user;
     }
 
-    public function login() {}
+    public function logout(): void
+    {
+        $user = Auth::user();
 
-    public function logout() {}
+        $user->currentAccessToken->delete();
 
-    public function register() {}
+    }
+
+    public function logoutAll(): void
+    {
+        $user = Auth::user();
+
+        $user->tokens()->delete();
+    }
+
+    public function register(): void
+    {
+        // Implement registration later.
+    }
 }
