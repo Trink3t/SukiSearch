@@ -78,6 +78,11 @@ class User extends Authenticatable
         return $this->roles()->where('name', $role->value)->exists();
     }
 
+    public function hasRoles(): bool
+    {
+        return $this->roles()->count() > 0;
+    }
+
     public function stores()
     {
         return $this->hasMany(Store::class, 'user_id');

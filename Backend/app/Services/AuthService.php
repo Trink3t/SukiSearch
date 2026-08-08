@@ -5,13 +5,17 @@ namespace App\Services;
 use App\DTOs\Auth\LoginDTO;
 use App\Models\User;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthService
 {
     public function login(LoginDTO $dto): User
     {
-        $successLogin = Auth::attempt($dto->toArray());
+        $successLogin = Auth::attempt([
+            'email' => $dto->email,
+            'password' => $dto->password,
+        ]);
         if (! $successLogin) {
             throw new AuthenticationException('Invalid credentials.');
         }
@@ -21,17 +25,17 @@ class AuthService
         return $user;
     }
 
-    public function logout(): void
+    public function logout(Request $request): void
     {
-        $user = Auth::user();
+        $user = $request->user();
 
         $user->currentAccessToken->delete();
 
     }
 
-    public function logoutAll(): void
+    public function logoutAll(Request $request): void
     {
-        $user = Auth::user();
+        $user = $request->user();
 
         $user->tokens()->delete();
     }

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\DTOs\Auth\LoginDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Http\Resources\User\UserResource;
+use App\Http\Resources\User\UserBaseResource;
 use App\Services\AuthService;
-use Auth;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
@@ -17,7 +18,7 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $dto = $request->toDTO();
+        $dto = LoginDTO::fromRequest($request);
 
         $user = $this->authService->login($dto);
 
@@ -34,23 +35,23 @@ class AuthController extends Controller
         );
     }
 
-    public function me()
+    public function me(Request $request)
     {
-        return UserResource::make(Auth::user());
+        return UserBaseResource::make($request->user());
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        $this->authService->logout();
+        $this->authService->logout($request);
 
         return $this->successResponse(
             status: Response::HTTP_NO_CONTENT
         );
     }
 
-    public function logoutAll()
+    public function logoutAll(Request $request)
     {
-        $this->authService->logoutAll();
+        $this->authService->logoutAll($request);
 
         return $this->successResponse(
             status: Response::HTTP_NO_CONTENT

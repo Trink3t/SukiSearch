@@ -12,7 +12,7 @@ class UserQuery extends QueryBuilder
     public function __construct()
     {
         parent::__construct(
-            User::query()
+            User::query()->with('roles')
         );
 
         $this

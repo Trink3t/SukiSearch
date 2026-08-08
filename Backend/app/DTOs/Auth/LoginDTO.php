@@ -2,6 +2,8 @@
 
 namespace App\DTOs\Auth;
 
+use App\Http\Requests\Auth\LoginRequest;
+
 final readonly class LoginDTO
 {
     public function __construct(
@@ -9,11 +11,11 @@ final readonly class LoginDTO
         public string $password,
     ) {}
 
-    public function toArray(): array
+    public static function fromRequest(LoginRequest $request): self
     {
-        return [
-            'email' => $this->email,
-            'password' => $this->password,
-        ];
+        return new self(
+            email: $request->validated('email'),
+            password: $request->validated('password'),
+        );
     }
 }
