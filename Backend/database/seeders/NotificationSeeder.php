@@ -4,17 +4,23 @@ namespace Database\Seeders;
 
 use App\Models\Notification;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
 class NotificationSeeder extends Seeder
 {
-    public function run(): void
+    public function run(int $count = 30): void
     {
-        User::query()->whereHas('roles', fn ($query) => $query->where('name', 'customer'))->each(function (User $user): void {
-            Notification::query()->firstOrCreate(
-                ['user_id' => $user->id, 'type' => 'reservation_status', 'title' => 'Reservation update'],
-                ['body' => 'May update sa inyong reservation.', 'data' => json_encode(['source' => 'seeder'], JSON_THROW_ON_ERROR), 'read_at' => null],
-            );
-        });
+        $users = User::query()->get();
+
+        if ($count === 0 || $users->isEmpty()) {
+            return;
+        }
+
+        Notification::factory($count)
+            ->sequence(fn (Sequence $sequence): array => [
+                'user_id' => $users[$sequence->index % $users->count()]->id,
+            ])
+            ->create();
     }
 }

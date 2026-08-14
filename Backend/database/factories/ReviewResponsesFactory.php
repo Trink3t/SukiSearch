@@ -20,7 +20,7 @@ class ReviewResponsesFactory extends Factory
     public function definition(): array
     {
         return [
-            'review_id' => Review::factory(), 'store_owner_id' => User::factory(), 'response' => 'Maraming salamat po sa inyong review!',
+            'review_id' => Review::factory(), 'store_owner_id' => User::factory(), 'response' => fake()->sentence(12),
         ];
     }
 }

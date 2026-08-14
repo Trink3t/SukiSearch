@@ -25,17 +25,19 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $faker = fake('en_PH');
+
         return [
-            'first_name' => fake()->firstName(),
-            'middle_name' => fake()->optional()->firstName(),
-            'last_name' => fake()->lastName(),
-            'email' => fake()->unique()->safeEmail(),
-            'mobile_number' => '09'.fake()->unique()->numerify('#########'),
-            'email_verified_at' => now(),
-            'mobile_verified_at' => now(),
+            'first_name' => $faker->firstName(),
+            'middle_name' => $faker->optional()->firstName(),
+            'last_name' => $faker->lastName(),
+            'email' => $faker->safeEmail(),
+            'mobile_number' => '09'.$faker->numerify('#########'),
+            'email_verified_at' => $faker->optional(0.8)->dateTimeBetween('-1 year'),
+            'mobile_verified_at' => $faker->optional(0.8)->dateTimeBetween('-1 year'),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
-            'status' => UserStatus::ACTIVE,
+            'status' => $faker->randomElement(UserStatus::cases()),
         ];
     }
 
@@ -52,5 +54,10 @@ class UserFactory extends Factory
     public function suspended(): static
     {
         return $this->state(fn (array $attributes) => ['status' => UserStatus::SUSPENDED]);
+    }
+
+    public function active(): static
+    {
+        return $this->state(fn (array $attributes) => ['status' => UserStatus::ACTIVE]);
     }
 }

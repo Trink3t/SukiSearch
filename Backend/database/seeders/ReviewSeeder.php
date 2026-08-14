@@ -9,12 +9,13 @@ use Illuminate\Database\Seeder;
 
 class ReviewSeeder extends Seeder
 {
-    public function run(): void
+    public function run(int $count = 15): void
     {
-        Reservation::query()->where('status', ReservationStatus::COMPLETED->value)->each(function (Reservation $reservation): void {
-            Review::query()->firstOrCreate(['reservation_id' => $reservation->id], [
-                'customer_id' => $reservation->customer_id, 'store_id' => $reservation->store_id, 'rating' => 5,
-                'comment' => 'Mabilis at maayos kausap. Salamat po!', 'published_at' => now(),
+        Reservation::query()->where('status', ReservationStatus::COMPLETED->value)->take($count)->each(function (Reservation $reservation): void {
+            Review::factory()->published()->create([
+                'reservation_id' => $reservation->id,
+                'customer_id' => $reservation->customer_id,
+                'store_id' => $reservation->store_id,
             ]);
         });
     }

@@ -22,13 +22,13 @@ class ProductFactory extends Factory
         return [
             'store_id' => Store::factory(),
             'category_id' => Category::factory(),
-            'name' => fake()->randomElement(['Coca-Cola 1.5L', 'Lucky Me Pancit Canton Chilimansi', 'Argentina Corned Beef 175g', 'Nescafé Original 3-in-1', 'Safeguard Pure White 85g']).' '.fake()->bothify('###'),
-            'description' => fake()->optional()->sentence(),
-            'image_path' => fake()->optional()->passthrough('products/product.jpg'),
-            'price' => fake()->randomFloat(2, 10, 250),
-            'quantity' => fake()->numberBetween(5, 80),
-            'is_active' => true,
-            'last_updated_at' => now(),
+            'name' => fake()->words(fake()->numberBetween(2, 4), true),
+            'description' => fake()->optional()->sentence(12),
+            'image_path' => fake()->optional()->filePath(),
+            'price' => fake()->randomFloat(2, 8, 500),
+            'quantity' => fake()->numberBetween(0, 80),
+            'is_active' => fake()->boolean(85),
+            'last_updated_at' => fake()->dateTimeBetween('-3 months'),
         ];
     }
 

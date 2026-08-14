@@ -59,6 +59,24 @@ class UserService
         return $dto->user;
     }
 
+    public function addRole(User $user, UserRole $role): User
+    {
+        $roleId = $this->roleService->getRoleID($role);
+
+        $user->roles()->syncWithoutDetaching([
+            $roleId,
+        ]);
+
+        return $user->refresh();
+    }
+
+    public function removeRole(UpdateUserRoleDTO $dto): User
+    {
+        $this->setRoles($dto);
+
+        return $dto->user;
+    }
+
     public function delete(User $user): void
     {
         $user->delete();

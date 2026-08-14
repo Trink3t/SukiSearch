@@ -16,6 +16,9 @@ class AuthController extends Controller
         private readonly AuthService $authService
     ) {}
 
+    /**
+     * Login user.
+     */
     public function login(LoginRequest $request)
     {
         $dto = LoginDTO::fromRequest($request);
@@ -35,11 +38,17 @@ class AuthController extends Controller
         );
     }
 
+    /**
+     * Get logged in user.
+     */
     public function me(Request $request)
     {
         return UserBaseResource::make($request->user());
     }
 
+    /**
+     * Logout user.
+     */
     public function logout(Request $request)
     {
         $this->authService->logout($request);
@@ -49,6 +58,9 @@ class AuthController extends Controller
         );
     }
 
+    /**
+     * Logout all user's sessions.
+     */
     public function logoutAll(Request $request)
     {
         $this->authService->logoutAll($request);

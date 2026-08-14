@@ -21,8 +21,8 @@ class ReservationItemFactory extends Factory
     public function definition(): array
     {
         return [
-            'reservation_id' => Reservation::factory(), 'product_id' => Product::factory(), 'product_name' => 'Lucky Me Pancit Canton Chilimansi',
-            'unit_price' => 18.50, 'requested_quantity' => 2, 'accepted_quantity' => 0, 'status' => ReservationItemStatus::PENDING,
+            'reservation_id' => Reservation::factory(), 'product_id' => Product::factory(), 'product_name' => fake()->words(3, true),
+            'unit_price' => fake()->randomFloat(2, 8, 500), 'requested_quantity' => fake()->numberBetween(1, 5), 'accepted_quantity' => 0, 'status' => ReservationItemStatus::PENDING,
             'rejection_reason' => null, 'cancellation_reason' => null,
         ];
     }
@@ -34,6 +34,6 @@ class ReservationItemFactory extends Factory
 
     public function rejected(): static
     {
-        return $this->state(fn (array $a) => ['status' => ReservationItemStatus::REJECTED, 'accepted_quantity' => 0, 'rejection_reason' => 'Out of stock']);
+        return $this->state(fn (array $a) => ['status' => ReservationItemStatus::REJECTED, 'accepted_quantity' => 0, 'rejection_reason' => fake()->sentence()]);
     }
 }

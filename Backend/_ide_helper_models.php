@@ -21,6 +21,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Product|null $product
  * @property-read \App\Models\User|null $user
+ * @method static \Database\Factories\CartItemFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CartItem newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CartItem newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CartItem query()
@@ -43,6 +44,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Product> $products
  * @property-read int|null $products_count
+ * @method static \Database\Factories\CategoryFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category query()
@@ -66,7 +68,10 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $read_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\NotificationDelivery> $deliveries
+ * @property-read int|null $deliveries_count
  * @property-read \App\Models\User|null $user
+ * @method static \Database\Factories\NotificationFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Notification newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Notification newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Notification query()
@@ -87,14 +92,15 @@ namespace App\Models{
 /**
  * @property int $id
  * @property int $notification_id
- * @property string $channel
- * @property string $status
+ * @property \App\Enums\NotificationDeliveryChannel $channel
+ * @property \App\Enums\NotificationDeliveryStatus $status
  * @property \Illuminate\Support\Carbon|null $sent_at
  * @property \Illuminate\Support\Carbon|null $failed_at
  * @property string|null $error_message
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Notification $notification
+ * @method static \Database\Factories\NotificationDeliveryFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|NotificationDelivery newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|NotificationDelivery newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|NotificationDelivery query()
@@ -124,6 +130,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User|null $recordedBy
  * @property-read \App\Models\Reservation|null $reservation
+ * @method static \Database\Factories\PaymentFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment query()
@@ -145,9 +152,9 @@ namespace App\Models{
  * @property int $id
  * @property int $reservation_id
  * @property int $verified_by
- * @property string $method
- * @property string $status
- * @property string|null $failure_reason
+ * @property \App\Enums\PickupVerificationMethod $method
+ * @property \App\Enums\PickupVerificationStatus $status
+ * @property \App\Enums\FailureReason|null $failure_reason
  * @property int $attempted_at
  * @property string|null $ip_address
  * @property string|null $user_agent
@@ -155,6 +162,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Reservation|null $reservation
  * @property-read \App\Models\User|null $verifiedBy
+ * @method static \Database\Factories\PickupVerificationAttemptFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PickupVerificationAttempt newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PickupVerificationAttempt newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PickupVerificationAttempt query()
@@ -194,6 +202,7 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Reservation> $reservations
  * @property-read int|null $reservations_count
  * @property-read \App\Models\Store|null $store
+ * @method static \Database\Factories\ProductFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product onlyTrashed()
@@ -223,14 +232,14 @@ namespace App\Models{
  * @property string $public_id
  * @property int $customer_id
  * @property int $store_id
- * @property string $status
+ * @property \App\Enums\ReservationStatus $status
  * @property \Illuminate\Support\Carbon|null $expires_at
  * @property string|null $pickup_code_hash
  * @property string|null $qr_token_hash
  * @property \Illuminate\Support\Carbon|null $ready_at
  * @property \Illuminate\Support\Carbon|null $picked_up_at
  * @property \Illuminate\Support\Carbon|null $completed_at
- * @property string|null $cancelled_by
+ * @property \App\Enums\CancelledBy|null $cancelled_by
  * @property string|null $cancelled_reason
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -245,6 +254,7 @@ namespace App\Models{
  * @property-read \App\Models\Store|null $store
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PickupVerificationAttempt> $verificationAttempts
  * @property-read int|null $verification_attempts_count
+ * @method static \Database\Factories\ReservationFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reservation onlyTrashed()
@@ -280,13 +290,14 @@ namespace App\Models{
  * @property numeric $unit_price
  * @property int $requested_quantity
  * @property int $accepted_quantity
- * @property string $status
+ * @property \App\Enums\ReservationItemStatus $status
  * @property string|null $rejection_reason
  * @property string|null $cancellation_reason
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Product|null $product
  * @property-read \App\Models\Reservation|null $reservation
+ * @method static \Database\Factories\ReservationItemFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReservationItem newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReservationItem newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReservationItem query()
@@ -323,6 +334,7 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ReviewResponses> $responses
  * @property-read int|null $responses_count
  * @property-read \App\Models\Store|null $store
+ * @method static \Database\Factories\ReviewFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Review newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Review newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Review onlyTrashed()
@@ -353,6 +365,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Review|null $review
  * @property-read \App\Models\User|null $storeOwner
+ * @method static \Database\Factories\ReviewResponsesFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReviewResponses newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReviewResponses newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ReviewResponses query()
@@ -375,6 +388,7 @@ namespace App\Models{
  * @property-read \App\Models\UserRole|null $pivot
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
  * @property-read int|null $users_count
+ * @method static \Database\Factories\RoleFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Role newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Role newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Role query()
@@ -409,6 +423,7 @@ namespace App\Models{
  * @property-read int|null $products_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Reservation> $reservations
  * @property-read int|null $reservations_count
+ * @method static \Database\Factories\StoreFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Store newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Store newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Store onlyTrashed()
@@ -433,6 +448,34 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Store withoutTrashed()
  */
 	class Store extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * @property int $id
+ * @property int $user_id
+ * @property \App\Enums\StoreOwnerEnrollmentStatus $status
+ * @property int|null $reviewed_by
+ * @property \Illuminate\Support\Carbon|null $reviewed_at
+ * @property string|null $rejection_reason
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User|null $reviewer
+ * @property-read \App\Models\User|null $user
+ * @method static \Database\Factories\StoreOwnerEnrollmentFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StoreOwnerEnrollment newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StoreOwnerEnrollment newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StoreOwnerEnrollment query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StoreOwnerEnrollment whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StoreOwnerEnrollment whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StoreOwnerEnrollment whereRejectionReason($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StoreOwnerEnrollment whereReviewedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StoreOwnerEnrollment whereReviewedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StoreOwnerEnrollment whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StoreOwnerEnrollment whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StoreOwnerEnrollment whereUserId($value)
+ */
+	class StoreOwnerEnrollment extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -463,6 +506,9 @@ namespace App\Models{
  * @property-read int|null $responses_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Review> $reviews
  * @property-read int|null $reviews_count
+ * @property-read \App\Models\UserRole|null $pivot
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Role> $roles
+ * @property-read int|null $roles_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Store> $stores
  * @property-read int|null $stores_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
@@ -473,6 +519,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User search(string $value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
@@ -500,6 +547,7 @@ namespace App\Models{
  * @property int $role_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Database\Factories\UserRoleFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserRole newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserRole newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserRole query()

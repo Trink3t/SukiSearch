@@ -18,8 +18,8 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->unique()->randomElement(['Beverages', 'Snacks', 'Canned Goods', 'Instant Food', 'Rice and Grains', 'Personal Care', 'Household', 'School Supplies']),
-            'description' => fake()->optional()->sentence(),
+            'name' => fake()->words(fake()->numberBetween(1, 3), true),
+            'description' => fake()->optional()->sentence(12),
         ];
     }
 }

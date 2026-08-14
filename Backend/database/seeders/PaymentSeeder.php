@@ -12,10 +12,14 @@ class PaymentSeeder extends Seeder
 {
     public function run(): void
     {
-        Reservation::query()->where('status', ReservationStatus::COMPLETED->value)->with('store')->each(function (Reservation $reservation): void {
-            Payment::query()->firstOrCreate(['reservation_id' => $reservation->id], [
-                'method' => PaymentMethod::CASH->value, 'amount' => 120.00, 'recorded_by' => $reservation->store->user_id,
-                'paid_at' => $reservation->completed_at, 'notes' => 'Cash payment received at pickup.',
+        Reservation::query()->where('status', ReservationStatus::COMPLETED->value)->with(['items', 'store'])->each(function (Reservation $reservation): void {
+            Payment::factory()->paidCash()->create([
+                'reservation_id' => $reservation->id,
+                'method' => PaymentMethod::CASH,
+                'amount' => $reservation->items->sum(fn ($item) => (float) $item->getRawOriginal('unit_price') * $item->accepted_quantity),
+                'recorded_by' => $reservation->store->user_id,
+                'paid_at' => $reservation->completed_at,
+                'notes' => fake()->optional()->sentence(10),
             ]);
         });
     }

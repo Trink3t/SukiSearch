@@ -19,7 +19,7 @@ class NotificationFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(), 'type' => 'reservation_status', 'title' => 'Reservation update', 'body' => 'May update sa inyong reservation.', 'data' => ['source' => 'seeder'], 'read_at' => null,
+            'user_id' => User::factory(), 'type' => fake()->word(), 'title' => fake()->sentence(4), 'body' => fake()->sentence(12), 'data' => json_encode(['reference' => fake()->uuid()], JSON_THROW_ON_ERROR), 'read_at' => fake()->optional()->dateTimeBetween('-1 month'),
         ];
     }
 }

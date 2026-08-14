@@ -21,17 +21,17 @@ class StoreFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'name' => fake()->unique()->randomElement(['Ate Nena', 'Kuya Jun', 'Nanay Lita', 'Aling Rosa']).' Sari-Sari Store',
-            'description' => fake()->optional()->sentence(),
-            'image_path' => fake()->optional()->passthrough('stores/store.jpg'),
-            'barangay_external_id' => 'PH-'.fake()->unique()->numerify('####'),
-            'barangay' => fake()->randomElement(['San Roque', 'Poblacion', 'Maligaya', 'Santa Cruz']),
-            'city_municipality' => fake()->randomElement(['Calamba', 'Los Baños', 'San Pablo']),
-            'province' => 'Laguna',
-            'latitude' => fake()->randomFloat(8, 14.15, 14.30),
-            'longitude' => fake()->randomFloat(8, 121.10, 121.30),
-            'status' => StoreStatus::PENDING,
-            'is_open' => true,
+            'name' => fake('en_PH')->company(),
+            'description' => fake()->optional()->sentence(15),
+            'image_path' => fake()->optional()->filePath(),
+            'barangay_external_id' => fake()->bothify('PH-########'),
+            'barangay' => fake()->citySuffix(),
+            'city_municipality' => fake('en_PH')->city(),
+            'province' => fake('en_PH')->state(),
+            'latitude' => fake()->randomFloat(8, 14.0, 15.0),
+            'longitude' => fake()->randomFloat(8, 120.5, 122.0),
+            'status' => fake()->randomElement(StoreStatus::cases()),
+            'is_open' => fake()->boolean(80),
         ];
     }
 

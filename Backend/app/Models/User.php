@@ -73,6 +73,11 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
+    public function hasEnrollments(): bool
+    {
+        return $this->enrollments()->exists();
+    }
+
     public function hasRole(UserRoleEnum $role): bool
     {
         return $this->roles()->where('name', $role->value)->exists();
@@ -98,7 +103,7 @@ class User extends Authenticatable
         return $this->hasMany(Reservation::class, 'customer_id');
     }
 
-    public function recordedPayments()
+    public function recorded_payments()
     {
         return $this->hasMany(Payment::class, 'recorded_by');
     }
@@ -121,5 +126,15 @@ class User extends Authenticatable
     public function notifications()
     {
         return $this->hasMany(Notification::class, 'user_id');
+    }
+
+    public function enrollments()
+    {
+        return $this->hasMany(StoreOwnerEnrollment::class, 'user_id');
+    }
+
+    public function reviewed_enrollments()
+    {
+        return $this->hasMany(StoreOwnerEnrollment::class, 'reviewed_by');
     }
 }

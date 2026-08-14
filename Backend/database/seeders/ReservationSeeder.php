@@ -4,31 +4,48 @@ namespace Database\Seeders;
 
 use App\Enums\CancelledBy;
 use App\Enums\ReservationStatus;
+use App\Enums\StoreStatus;
+use App\Enums\UserRole;
+use App\Enums\UserStatus;
 use App\Models\Reservation;
 use App\Models\Store;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
 class ReservationSeeder extends Seeder
 {
-    public function run(): void
+    public function run(int $count = 20, int $reviewCount = 15): void
     {
-        $customers = User::query()->whereHas('roles', fn ($query) => $query->where('name', 'customer'))->orderBy('id')->get();
-        $stores = Store::query()->orderBy('id')->get();
+        $customers = User::query()->where('status', UserStatus::ACTIVE->value)->whereHas('roles', fn ($query) => $query->where('name', UserRole::CUSTOMER->value))->get();
+        $stores = Store::query()->where('status', StoreStatus::ACTIVE->value)->where('is_open', true)->get();
 
-        foreach (ReservationStatus::cases() as $index => $status) {
-            $store = $stores[$index % $stores->count()];
-            $customer = $customers[$index % $customers->count()];
-            $publicId = sprintf('00000000-0000-4000-8000-%012d', $index + 1);
-            Reservation::query()->firstOrCreate(['public_id' => $publicId], Reservation::factory()->make([
-                'public_id' => $publicId, 'customer_id' => $customer->id, 'store_id' => $store->id, 'status' => $status,
-                'expires_at' => $status === ReservationStatus::EXPIRED ? now()->subHour() : now()->addHours(2),
-                'ready_at' => in_array($status, [ReservationStatus::READY_FOR_PICKUP, ReservationStatus::COMPLETED], true) ? now()->subHour() : null,
-                'picked_up_at' => $status === ReservationStatus::COMPLETED ? now()->subMinutes(30) : null,
-                'completed_at' => $status === ReservationStatus::COMPLETED ? now() : null,
-                'cancelled_by' => $status === ReservationStatus::CANCELLED ? CancelledBy::CUSTOMER : null,
-                'cancelled_reason' => $status === ReservationStatus::CANCELLED ? 'Changed plans.' : null,
-            ])->getAttributes());
+        if ($count === 0 || $customers->isEmpty() || $stores->isEmpty()) {
+            return;
         }
+
+        $completedCount = min($count, $reviewCount);
+        Reservation::factory($count)
+            ->sequence(function (Sequence $sequence) use ($customers, $stores, $completedCount): array {
+                $status = $sequence->index < $completedCount
+                    ? ReservationStatus::COMPLETED
+                    : ReservationStatus::cases()[($sequence->index - $completedCount) % count(ReservationStatus::cases())];
+                $createdAt = fake()->dateTimeBetween('-1 month');
+
+                return [
+                    'customer_id' => $customers[$sequence->index % $customers->count()]->id,
+                    'store_id' => $stores[$sequence->index % $stores->count()]->id,
+                    'status' => $status,
+                    'expires_at' => $status === ReservationStatus::EXPIRED ? now()->subHour() : now()->addHours(fake()->numberBetween(1, 24)),
+                    'ready_at' => in_array($status, [ReservationStatus::READY_FOR_PICKUP, ReservationStatus::COMPLETED], true) ? now()->subHours(fake()->numberBetween(1, 24)) : null,
+                    'picked_up_at' => $status === ReservationStatus::COMPLETED ? now()->subHour() : null,
+                    'completed_at' => $status === ReservationStatus::COMPLETED ? now() : null,
+                    'cancelled_by' => $status === ReservationStatus::CANCELLED ? fake()->randomElement(CancelledBy::cases()) : null,
+                    'cancelled_reason' => $status === ReservationStatus::CANCELLED ? fake()->sentence(10) : null,
+                    'created_at' => $createdAt,
+                    'updated_at' => $createdAt,
+                ];
+            })
+            ->create();
     }
 }
