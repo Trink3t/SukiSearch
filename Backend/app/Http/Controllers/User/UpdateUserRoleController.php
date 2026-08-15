@@ -18,7 +18,7 @@ class UpdateUserRoleController extends Controller
     ) {}
 
     /**
-     * Update the user role.
+     * Replace the roles assigned to a user.
      */
     public function __invoke(UpdateUserRoleRequest $request, User $user)
     {

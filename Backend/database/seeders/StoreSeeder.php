@@ -23,7 +23,6 @@ class StoreSeeder extends Seeder
             ->sequence(fn (Sequence $sequence): array => [
                 'user_id' => $owners[$sequence->index % $owners->count()]->id,
                 'name' => fake('en_PH')->company().' '.$sequence->index,
-                'barangay_external_id' => fake()->bothify('PH-######').$sequence->index,
                 'status' => $sequence->index % 5 === 0 ? StoreStatus::PENDING : StoreStatus::ACTIVE,
                 'is_open' => $sequence->index % 6 !== 0,
             ])

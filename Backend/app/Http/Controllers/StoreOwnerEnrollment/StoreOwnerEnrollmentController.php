@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\StoreOwnerEnrollment;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreOwnerEnrollment\StoreOwnerEnrollmentIndexRequest;
 use App\Http\Resources\StoreOwnerEnrollment\StoreOwnerEnrollmentBaseResource;
 use App\Http\Resources\StoreOwnerEnrollment\StoreOwnerEnrollmentResource;
 use App\Models\StoreOwnerEnrollment;
 use App\Queries\StoreOwnerEnrollment\StoreOwnerEnrollmentQuery;
 use App\Services\StoreOwnerEnrollmentService;
+use Dedoc\Scramble\Attributes\Group;
+use Dedoc\Scramble\Attributes\QueryParameter;
 use Illuminate\Http\Request;
 
+#[Group('StoreOwnerEnrollment')]
 class StoreOwnerEnrollmentController extends Controller
 {
     public function __construct(
@@ -18,12 +22,17 @@ class StoreOwnerEnrollmentController extends Controller
     ) {}
 
     /**
-     * Display a listing of enrollments.
+     * List store-owner enrollment requests with filtering, sorting, and pagination.
      */
-    public function index(Request $request)
+    #[QueryParameter('filter[id]', type: 'integer')]
+    #[QueryParameter('filter[status]', type: 'string')]
+    #[QueryParameter('page', type: 'integer', example: 1)]
+    #[QueryParameter('per_page', type: 'integer', example: 15)]
+    #[QueryParameter('sort', type: 'string', example: '-created_at')]
+    public function index(StoreOwnerEnrollmentIndexRequest $request)
     {
         $perPage = min(
-            (int) $request->input('per_page', 15),
+            $request->integer('per_page', 15),
             100
         );
 
@@ -37,7 +46,7 @@ class StoreOwnerEnrollmentController extends Controller
     }
 
     /**
-     * Store a newly created store owner enrollment.
+     * Submit the authenticated user's request to become a SukiSearch store owner.
      */
     public function store(Request $request)
     {
@@ -52,7 +61,7 @@ class StoreOwnerEnrollmentController extends Controller
     }
 
     /**
-     * Display the specified enrollment.
+     * Retrieve a store-owner enrollment request and its applicant.
      */
     public function show(StoreOwnerEnrollment $storeOwnerEnrollment)
     {
@@ -61,17 +70,11 @@ class StoreOwnerEnrollmentController extends Controller
         );
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, StoreOwnerEnrollment $storeOwnerEnrollment)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(StoreOwnerEnrollment $storeOwnerEnrollment)
     {
         //

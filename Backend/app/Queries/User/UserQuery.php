@@ -2,6 +2,7 @@
 
 namespace App\Queries\User;
 
+use App\Http\Requests\User\UserIndexRequest;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -9,7 +10,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class UserQuery extends QueryBuilder
 {
-    public function __construct()
+    public function __construct(UserIndexRequest $request)
     {
         parent::__construct(
             User::query()->with('roles')

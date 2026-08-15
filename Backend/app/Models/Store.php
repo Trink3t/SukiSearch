@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
     'name',
     'description',
     'image_path',
-    'barangay_external_id',
     'barangay',
     'city_municipality',
     'province',
@@ -32,8 +31,8 @@ class Store extends Model
     {
         return [
             'status' => StoreStatus::class,
-            'latitude' => 'decimal',
-            'longitude' => 'decimal',
+            'latitude' => 'decimal:8',
+            'longitude' => 'decimal:8',
             'is_open' => 'boolean',
         ];
     }

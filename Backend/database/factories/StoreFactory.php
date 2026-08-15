@@ -24,7 +24,6 @@ class StoreFactory extends Factory
             'name' => fake('en_PH')->company(),
             'description' => fake()->optional()->sentence(15),
             'image_path' => fake()->optional()->filePath(),
-            'barangay_external_id' => fake()->bothify('PH-########'),
             'barangay' => fake()->citySuffix(),
             'city_municipality' => fake('en_PH')->city(),
             'province' => fake('en_PH')->state(),

@@ -16,7 +16,7 @@ class ApproveStoreOwnerEnrollmentController extends Controller
     ) {}
 
     /**
-     * Approve store owner's enrollment.
+     * Approve a pending store-owner enrollment and assign the store-owner role.
      */
     public function __invoke(Request $request, StoreOwnerEnrollment $storeOwnerEnrollment)
     {

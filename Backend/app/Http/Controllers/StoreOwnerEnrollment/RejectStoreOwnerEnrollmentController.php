@@ -16,7 +16,7 @@ class RejectStoreOwnerEnrollmentController extends Controller
     ) {}
 
     /**
-     * Reject store owner's enrollment.
+     * Reject a pending store-owner enrollment with a reason.
      */
     public function __invoke(Request $request, StoreOwnerEnrollment $storeOwnerEnrollment)
     {

@@ -7,15 +7,16 @@ use App\DTOs\User\UpdateUserDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
+use App\Http\Requests\User\UserIndexRequest;
 use App\Http\Resources\User\UserResource;
 use App\Models\User;
 use App\Queries\User\UserQuery;
 use App\Services\UserService;
 use Dedoc\Scramble\Attributes\Group;
 use Dedoc\Scramble\Attributes\QueryParameter;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+#[Group('User')]
 class UserController extends Controller
 {
     public function __construct(
@@ -24,19 +25,20 @@ class UserController extends Controller
     ) {}
 
     /**
-     * Get all users.
+     * List users with optional filtering, sorting, role inclusion, and pagination.
      */
     #[QueryParameter('filter[search]', type: 'string')]
     #[QueryParameter('filter[status]', type: 'string')]
     #[QueryParameter('filter[email]', type: 'string', format: 'email')]
     #[QueryParameter('filter[role]', type: 'string')]
+    #[QueryParameter('include', type: 'string', example: 'roles')]
+    #[QueryParameter('page', type: 'integer', example: 1)]
     #[QueryParameter('per_page', type: 'integer', example: 15)]
     #[QueryParameter('sort', type: 'string', example: '-created_at')]
-    public function index(Request $request)
+    public function index(UserIndexRequest $request)
     {
-
         $perPage = min(
-            (int) $request->input('per_page', 15),
+            $request->integer('per_page', 15),
             100
         );
 
@@ -48,16 +50,14 @@ class UserController extends Controller
             ->additional([
                 'message' => 'Users retrieved successfully.',
             ]);
-
     }
 
     #[Group('Auth')]
     /**
-     * Create user account.
+     * Register a user account.
      */
     public function store(CreateUserRequest $request)
     {
-
         $dto = CreateUserDTO::fromRequest($request);
 
         $user = $this->userService->create($dto);
@@ -72,7 +72,7 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified user.
+     * Retrieve a user and their assigned roles.
      */
     public function show(User $user)
     {
@@ -84,7 +84,7 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified user.
+     * Update a user's profile details.
      */
     public function update(UpdateUserRequest $request, User $user)
     {
@@ -97,7 +97,7 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a user account.
      */
     public function destroy(User $user)
     {

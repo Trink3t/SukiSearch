@@ -7,9 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\User\UserBaseResource;
 use App\Services\AuthService;
+use Dedoc\Scramble\Attributes\Group;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+#[Group('Auth')]
 class AuthController extends Controller
 {
     public function __construct(
@@ -17,7 +19,7 @@ class AuthController extends Controller
     ) {}
 
     /**
-     * Login user.
+     * Authenticate a user and issue an API access token.
      */
     public function login(LoginRequest $request)
     {
@@ -39,7 +41,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Get logged in user.
+     * Retrieve the authenticated user's profile.
      */
     public function me(Request $request)
     {
@@ -47,7 +49,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Logout user.
+     * Revoke the current API access token.
      */
     public function logout(Request $request)
     {
@@ -59,7 +61,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Logout all user's sessions.
+     * Revoke all API access tokens for the authenticated user.
      */
     public function logoutAll(Request $request)
     {

@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('name', 150);
             $table->text('description')->nullable();
             $table->string('image_path', 500)->nullable();
-            $table->string('barangay_external_id', 150);
             $table->string('barangay', 150);
             $table->string('city_municipality', 150);
             $table->string('province', 150);
@@ -30,11 +29,10 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->index('user_id');
             $table->index('status');
             $table->index('is_open');
-            $table->index('barangay_external_id');
-            $table->index('longitude');
+            $table->index('barangay');
+            $table->index(['barangay', 'status', 'is_open']);
             $table->index(['latitude', 'longitude']);
             $table->index('name');
         });
