@@ -31,7 +31,7 @@ class StoreIndexRequest extends FormRequest
             'filter.name' => ['sometimes', 'string', 'max:150'],
             'filter.status' => ['sometimes', Rule::enum(StoreStatus::class)],
             'filter.is_open' => ['sometimes', 'boolean'],
-            'filter.barangay_external_id' => ['sometimes', 'string', 'max:150'],
+            // 'filter.barangay_external_id' => ['sometimes', 'string', 'max:150'],
             'filter.barangay' => ['sometimes', 'string', 'max:150'],
             'sort' => ['sometimes', 'string', 'regex:/^-?(name|created_at|status|nearest)(,-?(name|created_at|status|nearest))*$/'],
             'latitude' => [Rule::requiredIf($requiresCoordinates), 'numeric', 'between:-90,90'],

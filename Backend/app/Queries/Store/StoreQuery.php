@@ -2,6 +2,7 @@
 
 namespace App\Queries\Store;
 
+use App\Enums\StoreStatus;
 use App\Http\Requests\Store\StoreIndexRequest;
 use App\Models\Store;
 use App\Queries\Store\Sorts\NearestSort;
@@ -14,7 +15,7 @@ class StoreQuery extends QueryBuilder
     public function __construct(StoreIndexRequest $request)
     {
         parent::__construct(
-            Store::query()->with('owner')
+            Store::query()
         );
 
         $this
@@ -22,7 +23,6 @@ class StoreQuery extends QueryBuilder
                 AllowedFilter::partial('name'),
                 AllowedFilter::exact('status'),
                 AllowedFilter::exact('is_open'),
-                AllowedFilter::exact('barangay_external_id'),
                 AllowedFilter::exact('barangay'),
             )
             ->allowedSorts(
@@ -38,5 +38,12 @@ class StoreQuery extends QueryBuilder
                 ),
             )
             ->defaultSort('-created_at');
+    }
+
+    public function approved(): self
+    {
+        $this->where('status', StoreStatus::ACTIVE->value);
+
+        return $this;
     }
 }
