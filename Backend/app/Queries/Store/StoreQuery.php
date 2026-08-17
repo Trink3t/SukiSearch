@@ -5,6 +5,7 @@ namespace App\Queries\Store;
 use App\Enums\StoreStatus;
 use App\Http\Requests\Store\StoreIndexRequest;
 use App\Models\Store;
+use App\Models\User;
 use App\Queries\Store\Sorts\NearestSort;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
@@ -40,9 +41,16 @@ class StoreQuery extends QueryBuilder
             ->defaultSort('-created_at');
     }
 
-    public function approved(): self
+    public function approved(): static
     {
         $this->where('status', StoreStatus::ACTIVE->value);
+
+        return $this;
+    }
+
+    public function ownedByUser(User $user): static
+    {
+        $this->whereBelongsTo($user, 'owner');
 
         return $this;
     }

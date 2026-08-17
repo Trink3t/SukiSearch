@@ -3,6 +3,7 @@
 use App\Enums\UserRole;
 use App\Http\Controllers\Store\Admin\SetStoreStatusController;
 use App\Http\Controllers\Store\Admin\StoreController as AdminStoreController;
+use App\Http\Controllers\Store\GetStoreProductsController;
 use App\Http\Controllers\Store\StoreController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,4 +22,5 @@ Route::prefix('/stores')->group(function () {
     Route::post('/', [StoreController::class, 'store']);
     Route::patch('/{store}', [StoreController::class, 'update']);
     Route::delete('/{store}', [StoreController::class, 'destroy']);
+    Route::get('/{store}/products', GetStoreProductsController::class);
 });
