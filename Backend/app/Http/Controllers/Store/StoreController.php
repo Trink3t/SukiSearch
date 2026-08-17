@@ -2,18 +2,23 @@
 
 namespace App\Http\Controllers\Store;
 
+use App\DTOs\Store\AddStoreDTO;
+use App\DTOs\Store\UpdateStoreDTO;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Store\AddStoreRequest;
 use App\Http\Requests\Store\StoreIndexRequest;
+use App\Http\Requests\Store\UpdateStoreRequest;
 use App\Http\Resources\Store\StoreBaseResource;
 use App\Http\Resources\Store\StoreResource;
 use App\Models\Store;
 use App\Queries\Store\StoreQuery;
-use Illuminate\Http\Request;
+use App\Services\StoreService;
 
 class StoreController extends Controller
 {
     public function __construct(
-        private readonly StoreQuery $storeQuery
+        private readonly StoreQuery $storeQuery,
+        private readonly StoreService $storeService,
     ) {}
 
     /**
@@ -37,11 +42,16 @@ class StoreController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Add new store.
      */
-    public function store(Request $request)
+    public function store(AddStoreRequest $request)
     {
-        //
+        $store = $this->storeService->create($request->user(), AddStoreDTO::fromRequest($request));
+
+        return $this->successResponse(
+            data: StoreResource::make($store),
+            message: 'Store created successfully.',
+        );
     }
 
     /**
@@ -56,18 +66,27 @@ class StoreController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update basic store details
      */
-    public function update(Request $request, Store $store)
+    public function update(UpdateStoreRequest $request, Store $store)
     {
-        //
+        $store = $this->storeService->update(UpdateStoreDTO::fromRequest($request), $store);
+
+        return $this->successResponse(
+            data: StoreResource::make($store),
+            message: 'Store updated successfully.',
+        );
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove specific store
      */
     public function destroy(Store $store)
     {
-        //
+        $this->storeService->delete($store);
+
+        return $this->successResponse(
+            status: 204
+        );
     }
 }

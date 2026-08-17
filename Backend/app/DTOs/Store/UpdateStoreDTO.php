@@ -1,10 +1,10 @@
 <?php
 
-namespace App\DTOs\User;
+namespace App\DTOs\Store;
 
-use App\Http\Requests\User\UpdateUserRequest;
+use App\Http\Requests\Store\UpdateStoreRequest;
 
-final readonly class UpdateUserDTO
+class UpdateStoreDTO
 {
     /**
      * Create a new class instance.
@@ -13,7 +13,7 @@ final readonly class UpdateUserDTO
         public ?array $attributes,
     ) {}
 
-    public static function fromRequest(UpdateUserRequest $request): self
+    public static function fromRequest(UpdateStoreRequest $request): self
     {
         return new self(
             attributes: $request->validated(),
