@@ -14,6 +14,7 @@ use App\Models\Product;
 use App\Models\Store;
 use App\Queries\Product\ProductQuery;
 use App\Services\ProductService;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
 {
@@ -61,6 +62,7 @@ class ProductController extends Controller
                 'id' => $product->id,
             ],
             message: 'Product created successfully.',
+            status: Response::HTTP_CREATED
         );
     }
 
@@ -105,7 +107,7 @@ class ProductController extends Controller
         $this->productService->delete($product);
 
         return $this->successResponse(
-            status: 204,
+            status: Response::HTTP_NO_CONTENT,
         );
     }
 }

@@ -13,6 +13,7 @@ use App\Http\Resources\Store\StoreResource;
 use App\Models\Store;
 use App\Queries\Store\StoreQuery;
 use App\Services\StoreService;
+use Symfony\Component\HttpFoundation\Response;
 
 class StoreController extends Controller
 {
@@ -51,6 +52,7 @@ class StoreController extends Controller
         return $this->successResponse(
             data: StoreResource::make($store),
             message: 'Store created successfully.',
+            status: Response::HTTP_CREATED
         );
     }
 
@@ -86,7 +88,7 @@ class StoreController extends Controller
         $this->storeService->delete($store);
 
         return $this->successResponse(
-            status: 204
+            status: Response::HTTP_NO_CONTENT
         );
     }
 }

@@ -6,3 +6,4 @@ require __DIR__.'/store-owner-enrollment.php';
 require __DIR__.'/stores.php';
 require __DIR__.'/products.php';
 require __DIR__.'/store-owner.php';
+require __DIR__.'/cart.php';

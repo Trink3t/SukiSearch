@@ -12,6 +12,7 @@ use App\Services\StoreOwnerEnrollmentService;
 use Dedoc\Scramble\Attributes\Group;
 use Dedoc\Scramble\Attributes\QueryParameter;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 #[Group('StoreOwnerEnrollment')]
 class StoreOwnerEnrollmentController extends Controller
@@ -56,7 +57,8 @@ class StoreOwnerEnrollmentController extends Controller
 
         return $this->successResponse(
             data: StoreOwnerEnrollmentResource::make($enrollment),
-            message: 'Store owner enrollment created successfully.'
+            message: 'Store owner enrollment created successfully.',
+            status: Response::HTTP_CREATED
         );
     }
 

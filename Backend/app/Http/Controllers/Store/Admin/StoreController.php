@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Queries\Store\StoreQuery;
 use App\Services\StoreService;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class StoreController extends Controller
 {
@@ -46,6 +47,7 @@ class StoreController extends Controller
         return $this->successResponse(
             data: AdminStoreResource::make($store),
             message: 'Store created successfully.',
+            status: Response::HTTP_CREATED
         );
     }
 
