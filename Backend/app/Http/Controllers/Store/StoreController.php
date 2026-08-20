@@ -72,6 +72,8 @@ class StoreController extends Controller
      */
     public function update(UpdateStoreRequest $request, Store $store)
     {
+        $this->authorize('update', $store);
+
         $store = $this->storeService->update(UpdateStoreDTO::fromRequest($request), $store);
 
         return $this->successResponse(

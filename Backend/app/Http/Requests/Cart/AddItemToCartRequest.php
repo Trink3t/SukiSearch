@@ -4,7 +4,6 @@ namespace App\Http\Requests\Cart;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class AddItemToCartRequest extends FormRequest
 {
@@ -24,7 +23,7 @@ class AddItemToCartRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'product_id' => ['required', 'integer', Rule::exists('products', 'id')->where('is_active', true)],
+            'product_id' => ['required', 'integer', 'exists:products,id'],
             'quantity' => ['required', 'integer'],
         ];
     }

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Cart\AddItemToCartRequest;
 use App\Http\Resources\Cart\UserCartItemResource;
 use App\Models\CartItem;
+use App\Models\Product;
 use App\Services\CartService;
 use Dedoc\Scramble\Attributes\Group;
 use Illuminate\Http\Request;
@@ -24,7 +25,8 @@ class UserCartController extends Controller
      */
     public function index(Request $request)
     {
-        $cartItems = $request->user()->cartItems->load(['product']);
+        $this->authorize('viewAny', CartItem::class);
+        $cartItems = $request->user()->cartItems()->with('product')->get();
 
         return UserCartItemResource::collection($cartItems)
             ->additional([
@@ -37,7 +39,13 @@ class UserCartController extends Controller
      */
     public function store(AddItemToCartRequest $request)
     {
-        $cartItem = $this->cartService->create(AddItemToCartDTO::fromRequest($request), $request->user());
+        $dto = AddItemToCartDTO::fromRequest($request);
+        $this->authorize('create', [
+            CartItem::class,
+            Product::find($dto->product_id, 'id'),
+        ]);
+        dd('test');
+        $cartItem = $this->cartService->create($dto, $request->user());
 
         return $this->successResponse(
             data: [
@@ -61,6 +69,8 @@ class UserCartController extends Controller
      */
     public function update(Request $request, CartItem $cartItem)
     {
+        $this->authorize('update', $cartItem);
+
         $validated = $request->validate([
             'quantity' => ['required', 'integer', 'min:1'],
         ]);
