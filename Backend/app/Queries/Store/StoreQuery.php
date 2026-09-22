@@ -29,7 +29,6 @@ class StoreQuery extends QueryBuilder
             ->allowedSorts(
                 'name',
                 'created_at',
-                'status',
                 AllowedSort::custom(
                     'nearest',
                     new NearestSort(
@@ -41,14 +40,14 @@ class StoreQuery extends QueryBuilder
             ->defaultSort('-created_at');
     }
 
-    public function approved(): static
+    public function approved(): QueryBuilder
     {
         $this->where('status', StoreStatus::ACTIVE->value);
 
         return $this;
     }
 
-    public function ownedByUser(User $user): static
+    public function ownedByUser(User $user): QueryBuilder
     {
         $this->whereBelongsTo($user, 'owner');
 

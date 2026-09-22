@@ -33,14 +33,14 @@ class ProductQuery extends QueryBuilder
             ->defaultSort('-created_at');
     }
 
-    public function withinStore(Store $store): self
+    public function withinStore(Store $store): QueryBuilder
     {
         $this->whereBelongsTo($store, 'store');
 
         return $this;
     }
 
-    public function active(): self
+    public function active(): QueryBuilder
     {
         $this->where('is_active', true);
 
