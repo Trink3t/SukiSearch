@@ -21,7 +21,10 @@ class ProductFactory extends Factory
     {
         return [
             'store_id' => Store::factory(),
-            'category_id' => Category::factory(),
+            'category_id' => Category::query()->firstOrCreate(
+                ['name' => 'Others'],
+                ['description' => 'Products that do not belong to the listed categories.'],
+            )->id,
             'name' => fake()->words(fake()->numberBetween(2, 4), true),
             'description' => fake()->optional()->sentence(12),
             'image_path' => fake()->optional()->filePath(),

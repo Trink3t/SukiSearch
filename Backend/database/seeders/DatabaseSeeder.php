@@ -10,7 +10,6 @@ class DatabaseSeeder extends Seeder
     {
         $userCount = 30;
         $storeCount = 10;
-        $categoryCount = 8;
         $productCount = 50;
         $cartItemCount = 25;
         $reservationCount = 20;
@@ -21,7 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         $this->callWith(UserSeeder::class, ['count' => $userCount]);
         $this->callWith(StoreOwnerEnrollmentSeeder::class, ['count' => $enrollmentCount, 'storeCount' => $storeCount]);
-        $this->callWith(CategorySeeder::class, ['count' => $categoryCount]);
+        $this->call(CategorySeeder::class);
         $this->callWith(StoreSeeder::class, ['count' => $storeCount]);
         $this->callWith(ProductSeeder::class, ['count' => $productCount]);
         $this->callWith(CartItemSeeder::class, ['count' => $cartItemCount]);
