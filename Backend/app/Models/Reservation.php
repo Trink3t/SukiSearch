@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 #[Fillable([
     'public_id',
     'customer_id',
-    'idempotency_key',
     'store_id',
     'status',
     'expires_at',

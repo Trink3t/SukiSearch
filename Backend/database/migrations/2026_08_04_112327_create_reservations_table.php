@@ -18,7 +18,6 @@ return new class extends Migration
             $table->id();
             $table->uuid('public_id')->unique();
             $table->foreignIdFor(User::class, 'customer_id')->constrained()->restrictOnDelete();
-            $table->uuid('idempotency_key')->nullable();
             $table->foreignIdFor(Store::class)->constrained()->restrictOnDelete();
             $table->string('status')->default(ReservationStatus::PENDING->value);
             $table->timestamp('expires_at')->nullable();
@@ -33,7 +32,6 @@ return new class extends Migration
             $table->timestamps();
 
             $table->index('customer_id');
-            $table->unique(['customer_id', 'idempotency_key']);
             $table->index('store_id');
             $table->index('status');
             $table->index('expires_at');

@@ -23,7 +23,6 @@ class ReservationFactory extends Factory
     {
         return [
             'public_id' => (string) Str::uuid(), 'customer_id' => User::factory(), 'store_id' => Store::factory(),
-            'idempotency_key' => (string) Str::uuid(),
             'status' => ReservationStatus::PENDING, 'expires_at' => now()->addHour(),
             'pickup_code_hash' => null, 'qr_token_hash' => null, 'ready_at' => null, 'picked_up_at' => null, 'completed_at' => null,
             'cancelled_by' => null, 'cancelled_reason' => null,
