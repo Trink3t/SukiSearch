@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\DTOs\Auth\LoginDTO;
+use App\Enums\AuthClient;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\User\UserBaseResource;
 use App\Services\AuthService;
 use Dedoc\Scramble\Attributes\Group;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,23 +23,17 @@ class AuthController extends Controller
     /**
      * Authenticate a user and issue an API access token.
      */
-    public function login(LoginRequest $request)
+    public function login(LoginRequest $request): JsonResponse
     {
-        $dto = LoginDTO::fromRequest($request);
+        return $this->loginForClient($request, AuthClient::USER);
+    }
 
-        $user = $this->authService->login($dto);
-
-        $token = $user->createToken('access_token');
-
-        return $this->successResponse(
-            data: [
-                'id' => $user->id,
-            ],
-            meta: [
-                'token' => $token->plainTextToken,
-            ],
-            message: 'Login successful.'
-        );
+    /**
+     * Authenticate an administrator and issue an admin-context API access token.
+     */
+    public function adminLogin(LoginRequest $request): JsonResponse
+    {
+        return $this->loginForClient($request, AuthClient::ADMIN);
     }
 
     /**
@@ -69,6 +65,28 @@ class AuthController extends Controller
 
         return $this->successResponse(
             status: Response::HTTP_NO_CONTENT
+        );
+    }
+
+    private function loginForClient(
+        LoginRequest $request,
+        AuthClient $authClient
+    ): JsonResponse {
+        $user = $this->authService->login(
+            LoginDTO::fromRequest($request),
+            $authClient
+        );
+
+        $token = $user->createToken('access_token', [$authClient->value]);
+
+        return $this->successResponse(
+            data: [
+                'id' => $user->id,
+            ],
+            meta: [
+                'token' => $token->plainTextToken,
+            ],
+            message: 'Login successful.'
         );
     }
 }

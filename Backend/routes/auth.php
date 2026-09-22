@@ -13,3 +13,7 @@ Route::prefix('auth')->group(function () {
         Route::post('/logout-all', [AuthController::class, 'logoutAll']);
     });
 });
+
+Route::prefix('admin/auth')->group(function () {
+    Route::post('/login', [AuthController::class, 'adminLogin']);
+});
